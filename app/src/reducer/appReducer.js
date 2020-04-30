@@ -1,33 +1,28 @@
-import {
-  FETCHING_IMG_START,
-  FETCHING_IMG_SUCCESS,
-  FETCHING_IMG_FAILURE,
-} from "../actions/AppAction";
-
 const initialState = {
-  IMG: null,
+  joke: "",
   isFetching: false,
   error: "",
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCHING_IMG_START:
+    case "FETCH_JOKE_START":
       return {
         ...state,
         isFetching: true,
       };
-    case FETCHING_IMG_SUCCESS:
+    case "FETCH_JOKE_SUCCESS":
       return {
         ...state,
         isFetching: false,
-        IMG: action.payload,
+        joke: action.payload,
       };
-    case FETCHING_IMG_FAILURE:
+    case "FETCH_JOKE_ERROR":
       return {
         ...state,
+        joke: "",
         isFetching: false,
-        error: "There was an error.",
+        error: action.payload,
       };
     default:
       return state;

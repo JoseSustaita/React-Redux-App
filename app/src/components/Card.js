@@ -1,20 +1,47 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import Loader from "react-loader-spinner";
 
-export default function DogCard() {
-  return (
-    <div>
-      <Card className="dog" style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-    </div>
-  );
-}
+import { fetchJoke } from "../actions/AppAction";
+
+const Card = ({ fetchJoke, joke, isFetching, error }) => {
+  if (error !== "")
+    return (
+      <div>
+        <h2>{error}</h2>
+        <button onClick={fetchJoke}>Press for a Joke</button>
+      </div>
+    );
+
+  if (isFetching) {
+    return (
+      <div>
+        {" "}
+        <Loader
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          timeout={3000} //3 sec timer
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h2>Laugh Bot: {joke}</h2>
+        <button onClick={fetchJoke}>Press for a Joke</button>
+      </div>
+    );
+  }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    joke: state.joke,
+    isFetching: state.isFetching,
+    error: state.error,
+  };
+};
+
+export default connect(mapStateToProps, { fetchJoke })(Card);
