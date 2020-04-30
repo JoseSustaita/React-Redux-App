@@ -30,7 +30,9 @@ const Card = ({ fetchJoke, joke, isFetching, error }) => {
     return (
       <div>
         <h2>Laugh Bot: {joke}</h2>
-        <button onClick={fetchJoke}>Press for a Joke</button>
+        <button className="joke-button" onClick={fetchJoke}>
+          Press for a Joke
+        </button>
       </div>
     );
   }
